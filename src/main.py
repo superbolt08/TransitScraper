@@ -13,7 +13,7 @@ html_pages = fetch_all(urls)
 # Save raw HTML to /data/raw/
 os.makedirs("data/raw", exist_ok=True)
 
-# Saves all the scraped HTML pages into cleanly named files in data/raw/
+# Saves all the scraped HTML pages into cleanly named files in data/raws/
 for url, html in html_pages.items():
     route_id = url.split("=")[-1]
     file_path = f"data/raw/route_{route_id}.html"
