@@ -1,6 +1,7 @@
 # src/main.py
 from scraper.fetcher import fetch_all
 from scraper.parser import parse_schedule_html
+from visualizer import plot_trip_frequency
 import pandas as pd
 import os
 import glob
@@ -44,6 +45,9 @@ def main():
             print(f"No trips found in {file_path}")
 
     print("\n✅ All routes scraped, parsed, and saved.")
+
+ # === 4. Vizualize routes ===
+plot_trip_frequency("data/processed/route_97.csv")
 
 if __name__ == "__main__":
     main()
