@@ -1,0 +1,8 @@
+2025-05-05 23:18:52,497 [INFO] Fetching route pages...
+2025-05-05 23:18:52,556 [INFO] 
+ Parsing saved HTML files...
+2025-05-05 23:18:52,692 [INFO] Parsed and saved 46 trips → data/processed/route_10.csv
+2025-05-05 23:18:52,881 [INFO] Parsed and saved 68 trips → data/processed/route_8.csv
+2025-05-05 23:18:53,095 [INFO] Parsed and saved 57 trips → data/processed/route_97.csv
+2025-05-05 23:18:53,095 [INFO] 
+✅ All routes scraped, parsed, and saved.

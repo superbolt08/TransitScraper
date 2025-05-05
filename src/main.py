@@ -26,7 +26,7 @@ def fetch_routes():
     urls = [base_url + route_id for route_id in route_ids]
 
     # === 2. Fetch all pages using multithreading ===
-    print("Fetching route pages...")
+    logging.info("Fetching route pages...")
     html_pages = fetch_all(urls)
 
     # Save raw HTML to /data/raw/
@@ -38,11 +38,11 @@ def fetch_routes():
         file_path = f"data/raw/route_{route_id}.html"
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(html)
-            print(f"[✔] Saved HTML for route {route_id} → {file_path}")
+            logging.info(f"[✔] Saved HTML for route {route_id} → {file_path}")
 
 def parse_files():
     # === 3. Parse all saved HTML files ===
-    print("\n Parsing saved HTML files...")
+    logging.info("\n Parsing saved HTML files...")
     raw_files = glob.glob("data/raw/*.html")
     os.makedirs("data/processed", exist_ok=True)
 
@@ -54,11 +54,11 @@ def parse_files():
             df = pd.DataFrame(trips)
             output_path = f"data/processed/route_{route_id}.csv"
             df.to_csv(output_path, index=False)
-            print(f"Parsed and saved {len(trips)} trips → {output_path}")
+            logging.info(f"Parsed and saved {len(trips)} trips → {output_path}")
         else:
-            print(f"No trips found in {file_path}")
+            logging.info(f"No trips found in {file_path}")
 
-    print("\n✅ All routes scraped, parsed, and saved.")
+    logging.info("\n✅ All routes scraped, parsed, and saved.")
 
 
 def main():
@@ -78,13 +78,13 @@ def main():
         parse_files()
     elif args.mode == "visualize":  # === 4. Vizualize route ===
         if not args.route:
-            print("[❌] You must specify --route when using --mode visualize")
+            logging.info("[❌] You must specify --route when using --mode visualize")
         else:
             path = f"data/processed/route_{args.route}.csv"
             if os.path.exists(path):
                 plot_trip_frequency(path)
             else:
-                print(f"[❌] CSV not found: {path}")
+                logging.info(f"[❌] CSV not found: {path}")
     elif args.mode == "all":
         fetch_routes()
         parse_files()
@@ -95,7 +95,7 @@ def main():
         if os.path.exists(path):
             plot_trip_frequency(path)
         else:
-            print(f"[❌] CSV not found for route {default_route}")
+            logging.info(f"[❌] CSV not found for route {default_route}")
                 
 if __name__ == "__main__":
     main()
