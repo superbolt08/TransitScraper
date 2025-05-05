@@ -105,6 +105,7 @@ python src/main.py --mode <fetch|parse|visualize> [--route ROUTE_ID]
      - `fetch`: Scrape transit schedule data and save raw HTML files.
      - `parse`: Process the saved HTML files and generate CSV files with trip data.
      - `visualize`: Visualize trip data for a specific route.
+     - `all`: Does all of the above with the default path for route 97
 
 2. **`--route`** (optional, required for `visualize` mode):
    - Specifies the route number to visualize.
@@ -131,6 +132,13 @@ python src/main.py --mode visualize --route 97
 ```
 This will display a graph or chart (depending on your `plot_trip_frequency` implementation).
 
+#### 4. Run all commands
+Runs the full pipeline: fetches HTML, parses data into CSV, and visualizes the specified route.
+
+`--mode all [--route <ROUTE_ID>]`
+```bash
+python src/main.py --mode all --route 97
+```
 ---
 ### 🛑 Error Handling
 - If you run `--mode visualize` without specifying a route:
