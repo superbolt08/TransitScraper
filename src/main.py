@@ -6,6 +6,18 @@ import pandas as pd
 import os
 import glob
 import argparse
+import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(),  # show in terminal
+        logging.FileHandler("logs/run.log", mode='a', encoding='utf-8')  # save to file
+    ]
+)
+
 
 def fetch_routes():
     # === 1. Define route URLs ===
