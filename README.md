@@ -88,6 +88,64 @@ The scraper will:
    ```
 
 ---
+## 🧪 Command-Line Interface (CLI)
+
+The project includes a CLI powered by `argparse`, allowing you to run specific parts of the pipeline directly from the command line.
+
+### 📌 Basic Format
+
+```
+python src/main.py --mode <fetch|parse|visualize> [--route ROUTE_ID]
+```
+
+#### Arguments:
+1. **`--mode`** (required):
+   - Specifies the action to perform.
+   - Options:
+     - `fetch`: Scrape transit schedule data and save raw HTML files.
+     - `parse`: Process the saved HTML files and generate CSV files with trip data.
+     - `visualize`: Visualize trip data for a specific route.
+
+2. **`--route`** (optional, required for `visualize` mode):
+   - Specifies the route number to visualize.
+   - Example: `--route 97`
+
+#### 1. Fetch Transit Data
+To scrape transit schedule data for all defined routes:
+```bash
+python src/main.py --mode fetch
+```
+This will save raw HTML files in the `data/raw/` directory.
+
+#### 2. Parse Transit Data
+To process the saved HTML files and generate CSV files:
+```bash
+python src/main.py --mode parse
+```
+This will save processed CSV files in the `data/processed/` directory.
+
+#### 3. Visualize Transit Data
+To visualize trip data for a specific route (e.g., route 97):
+```bash
+python src/main.py --mode visualize --route 97
+```
+This will display a graph or chart (depending on your `plot_trip_frequency` implementation).
+
+---
+### 🛑 Error Handling
+- If you run `--mode visualize` without specifying a route:
+  ```bash
+  python src/main.py --mode visualize
+  ```
+  The script will display:
+  ```
+  [❌] You must specify --route when using --mode visualize. Example: --route 97
+  ```
+
+- If the CSV file for the specified route does not exist:
+  ```
+  [❌] CSV not found: data/processed/route_<ROUTE_ID>.csv. Ensure you have run the script with --mode parse first.
+  ```
 
 ## Customization
 - **Add More Routes**:
