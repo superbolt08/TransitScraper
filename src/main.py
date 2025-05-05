@@ -52,7 +52,7 @@ def parse_files():
 def main():
     parser = argparse.ArgumentParser(description="Transit Scraper CLI")
     parser.add_argument("--mode", type=str, required=True,
-                        choices=["fetch", "parse", "visualize"],
+                        choices=["fetch", "parse", "visualize", "all"],
                         help="What action to perform")
 
     parser.add_argument("--route", type=str,
@@ -73,6 +73,17 @@ def main():
                 plot_trip_frequency(path)
             else:
                 print(f"[❌] CSV not found: {path}")
+    elif args.mode == "all":
+        fetch_routes()
+        parse_files()
+
+        default_route = args.route if args.route else "97"
+        path = f"data/processed/route_{default_route}.csv"
+
+        if os.path.exists(path):
+            plot_trip_frequency(path)
+        else:
+            print(f"[❌] CSV not found for route {default_route}")
                 
 if __name__ == "__main__":
     main()
