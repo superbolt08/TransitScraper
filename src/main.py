@@ -5,8 +5,9 @@ from visualizer import plot_trip_frequency
 import pandas as pd
 import os
 import glob
+import argparse
 
-def main():
+def fetch_routes():
     # === 1. Define route URLs ===
     route_ids = ["97", "8", "10"]
     base_url = "https://www.bctransit.com/kelowna/schedules-and-maps/route-overview/?route="
@@ -27,6 +28,7 @@ def main():
             f.write(html)
             print(f"[✔] Saved HTML for route {route_id} → {file_path}")
 
+def parse_files():
     # === 3. Parse all saved HTML files ===
     print("\n Parsing saved HTML files...")
     raw_files = glob.glob("data/raw/*.html")
@@ -46,8 +48,31 @@ def main():
 
     print("\n✅ All routes scraped, parsed, and saved.")
 
- # === 4. Vizualize routes ===
-plot_trip_frequency("data/processed/route_97.csv")
 
+def main():
+    parser = argparse.ArgumentParser(description="Transit Scraper CLI")
+    parser.add_argument("--mode", type=str, required=True,
+                        choices=["fetch", "parse", "visualize"],
+                        help="What action to perform")
+
+    parser.add_argument("--route", type=str,
+                        help="Route number to visualize (used with mode=visualize)")
+
+    args = parser.parse_args()
+
+    if args.mode == "fetch":
+        fetch_routes()
+    elif args.mode == "parse":
+        parse_files()
+    elif args.mode == "visualize":  # === 4. Vizualize route ===
+        if not args.route:
+            print("[❌] You must specify --route when using --mode visualize")
+        else:
+            path = f"data/processed/route_{args.route}.csv"
+            if os.path.exists(path):
+                plot_trip_frequency(path)
+            else:
+                print(f"[❌] CSV not found: {path}")
+                
 if __name__ == "__main__":
     main()
