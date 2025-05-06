@@ -45,12 +45,24 @@ def run_parser_on_html(html_str):
 #     results = run_parser_on_html(html)
 #     assert results == []
 
-def test_parse_schedule_html_incomplete_row():
+# def test_parse_schedule_html_incomplete_row():
+#     html = """
+#     <table>
+#       <thead><tr><th>Stop A</th><th>Stop B</th></tr></thead>
+#       <tbody><tr><td>06:00 AM</td></tr></tbody>
+#     </table>
+#     """
+#     results = run_parser_on_html(html)
+#     assert results == []  # Skips invalid/incomplete rows
+
+def test_parse_schedule_html_extra_column():
     html = """
     <table>
       <thead><tr><th>Stop A</th><th>Stop B</th></tr></thead>
-      <tbody><tr><td>06:00 AM</td></tr></tbody>
+      <tbody><tr><td></td><td>06:00 AM</td><td>06:15 AM</td></tr></tbody>
     </table>
     """
     results = run_parser_on_html(html)
-    assert results == []  # Skips invalid/incomplete rows
+    assert len(results) == 1
+    assert results[0]["Stop A"] == "06:00 AM"
+    assert results[0]["Stop B"] == "06:15 AM"
