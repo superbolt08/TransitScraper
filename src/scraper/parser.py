@@ -7,8 +7,13 @@ def parse_schedule_html(file_path):
 
     # Get stop names from the table header
     table = soup.find('table')  # the main schedule table
-    header = table.find('thead')
-    stop_names = [th.get_text(strip=True) for th in header.find_all('th') if th.get_text(strip=True)]
+    header_cells = table.find('thead')
+    if not header_cells:
+        return []
+    ths = header_cells.find_all("th")
+    if not ths:
+        return []
+    stop_names = [th.get_text(strip=True) for th in header_cells.find_all('th') if th.get_text(strip=True)]
 
     # Get all rows of times from the table body
     body = table.find('tbody')

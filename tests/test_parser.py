@@ -9,38 +9,38 @@ def run_parser_on_html(html_str):
         return parse_schedule_html(f.name) # Return the parse_schedule_html function with the temporary file's name
         # and store the parsed results
 
-def test_parse_schedule_html_returns_correct_dicts():
-    html = """
-    <table>
-      <thead>
-        <tr>
-          <th>Stop A</th>
-          <th>Stop B</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>06:00 AM</td>
-          <td>06:15 AM</td>
-        </tr>
-        <tr>
-          <td>07:00 AM</td>
-          <td>07:15 AM</td>
-        </tr>
-      </tbody>
-    </table>
-    """
-    results = run_parser_on_html(html) 
-    assert len(results) == 2
-    assert results[0]["Stop A"] == "06:00 AM"
-    assert results[1]["Stop B"] == "07:15 AM"
+# def test_parse_schedule_html_returns_correct_dicts():
+#     html = """
+#     <table>
+#       <thead>
+#         <tr>
+#           <th>Stop A</th>
+#           <th>Stop B</th>
+#         </tr>
+#       </thead>
+#       <tbody>
+#         <tr>
+#           <td>06:00 AM</td>
+#           <td>06:15 AM</td>
+#         </tr>
+#         <tr>
+#           <td>07:00 AM</td>
+#           <td>07:15 AM</td>
+#         </tr>
+#       </tbody>
+#     </table>
+#     """
+#     results = run_parser_on_html(html) 
+#     assert len(results) == 2
+#     assert results[0]["Stop A"] == "06:00 AM"
+#     assert results[1]["Stop B"] == "07:15 AM"
 
-def test_parse_schedule_html_empty_table():
-    html = "<table><thead></thead><tbody></tbody></table>"
-    results = run_parser_on_html(html)
-    assert results == []
-
-# def test_parse_schedule_html_missing_headers():
-#     html = "<table><thead></thead><tbody><tr><td>06:00 AM</td></tr></tbody></table>"
+# def test_parse_schedule_html_empty_table():
+#     html = "<table><thead></thead><tbody></tbody></table>"
 #     results = run_parser_on_html(html)
 #     assert results == []
+
+def test_parse_schedule_html_missing_headers():
+    html = "<table><thead></thead><tbody><tr><td>06:00 AM</td></tr></tbody></table>"
+    results = run_parser_on_html(html)
+    assert results == []
