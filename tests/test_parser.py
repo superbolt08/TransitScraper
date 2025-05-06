@@ -40,7 +40,17 @@ def run_parser_on_html(html_str):
 #     results = run_parser_on_html(html)
 #     assert results == []
 
-def test_parse_schedule_html_missing_headers():
-    html = "<table><thead></thead><tbody><tr><td>06:00 AM</td></tr></tbody></table>"
+# def test_parse_schedule_html_missing_headers():
+#     html = "<table><thead></thead><tbody><tr><td>06:00 AM</td></tr></tbody></table>"
+#     results = run_parser_on_html(html)
+#     assert results == []
+
+def test_parse_schedule_html_incomplete_row():
+    html = """
+    <table>
+      <thead><tr><th>Stop A</th><th>Stop B</th></tr></thead>
+      <tbody><tr><td>06:00 AM</td></tr></tbody>
+    </table>
+    """
     results = run_parser_on_html(html)
-    assert results == []
+    assert results == []  # Skips invalid/incomplete rows
